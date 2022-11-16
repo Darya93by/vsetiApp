@@ -10,7 +10,6 @@ export const gStyle = StyleSheet.create({
     fontFamily: "Avenir-book",
   },
   header: {
-    marginTop: 30,
     flexDirection: "row",
     backgroundColor: "#CCF0D3",
     height: 55,

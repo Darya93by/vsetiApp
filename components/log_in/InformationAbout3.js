@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
@@ -43,7 +43,6 @@ export default function InformationAbout3() {
         id: 1,
         avatar: require("../../assets/yongMan.jpg"),
         fans: 100467,
-        stateOfSubscription: addCumirStyle,
       },
       {
         name: "July",
@@ -51,7 +50,6 @@ export default function InformationAbout3() {
         id: 2,
         avatar: require("../../assets/gerl1.jpeg"),
         fans: 86790,
-        stateOfSubscription: addCumirStyle,
       },
       {
         name: "Kate",
@@ -59,7 +57,6 @@ export default function InformationAbout3() {
         id: 3,
         avatar: require("../../assets/gerl2.jpg"),
         fans: 55388,
-        stateOfSubscription: addCumirStyle,
       },
       {
         name: "Elizabet",
@@ -67,7 +64,6 @@ export default function InformationAbout3() {
         id: 4,
         avatar: require("../../assets/gerl3.jpeg"),
         fans: 38903,
-        stateOfSubscription: addCumirStyle,
       },
       {
         name: "Penny",
@@ -75,7 +71,6 @@ export default function InformationAbout3() {
         id: 5,
         avatar: require("../../assets/gerl4.jpeg"),
         fans: 31400,
-        stateOfSubscription: addCumirStyle,
       },
     ],
     [
@@ -84,71 +79,35 @@ export default function InformationAbout3() {
         category: "Technologies",
         id: 1,
         icon: require("../../assets/icon_11.png"),
-        stateOfSubscription: addCumirStyle,
       },
       {
         communitie: "Rock",
         category: "Music",
         id: 2,
         icon: require("../../assets/rock.jpeg"),
-        stateOfSubscription: addCumirStyle,
       },
       {
         communitie: "Photography",
         category: "Photo",
         id: 3,
         icon: require("../../assets/photo.jpg"),
-        stateOfSubscription: addCumirStyle,
       },
       {
         communitie: "Dogs",
         category: "Animal",
         id: 4,
         icon: require("../../assets/dog.jpg"),
-        stateOfSubscription: addCumirStyle,
       },
       {
         communitie: "Horror",
         category: "Films",
         id: 5,
         icon: require("../../assets/horror.jpeg"),
-        stateOfSubscription: addCumirStyle,
       },
     ],
   ]);
 
   //
-
-  const addCumirStyle = {
-    text: "Подписаться",
-    colors: StyleSheet.create({
-      add: {
-        color: "rgba(67, 171, 69, 0.75)",
-        fontFamily: "RobotoFlex-Regular",
-        paddingLeft: 5,
-        borderRadius: 80,
-        borderColor: "rgba(67, 171, 69, 0.75)",
-        borderWidth: 1,
-        fontSize: 11,
-        textAlign: "center",
-      },
-    }),
-  };
-  const deleteCumirStyle = {
-    text: "Вы подписаны",
-    colors: StyleSheet.create({
-      delete: {
-        color: "rgba(96, 155, 244, 0.75)",
-        fontFamily: "RobotoFlex-Regular",
-        paddingLeft: 5,
-        borderRadius: 80,
-        borderColor: "rgba(96, 155, 244, 0.75)",
-        borderWidth: 1,
-        fontSize: 11,
-        textAlign: "center",
-      },
-    }),
-  };
 
   const navigation = useNavigation();
 
@@ -162,16 +121,31 @@ export default function InformationAbout3() {
     return setCommunities((list) => [item, ...list]);
   };
 
-  const myCumir = (item, value) => {
-    if (peoples.includes(item.id)) {
-      item.stateOfSubscription = addCumirStyle;
-      return setPeoples((list) => {
-        return list.filter((value) => value.id != item.id);
-      });
-    } else {
-      item.stateOfSubscription = deleteCumirStyle;
-      addPeople(item);
-    }
+  const myCumir = (item) => {
+    let listID = peoples.map((value) => value.id);
+    listID.includes(item.id)
+      ? setPeoples((list) => {
+          return list.filter((peoples) => peoples.id != item.id);
+        })
+      : addPeople(item);
+    console.log(peoples);
+  };
+  const myGroups = (item) => {
+    let listID = communities.map((communitie) => communitie.id);
+    listID.includes(item.id)
+      ? setCommunities((list) => {
+          return list.filter((communitie) => communitie.id != item.id);
+        })
+      : addCommunities(item);
+  };
+
+  const colorButtonP = (item) => {
+    let listID = peoples.map((people) => people.id);
+    listID.includes(item.id) ? true : false;
+  };
+  const colorButtonC = (item) => {
+    let listID = communities.map((value) => value.id);
+    listID.includes(item.id) ? true : false;
   };
 
   return (
@@ -280,16 +254,33 @@ export default function InformationAbout3() {
                               {item.fans} подписчиков
                             </Text>
                           </View>
-                          <View
-                            style={{ fles: 1, width: 100, paddingLeft: 15 }}
+                          <TouchableOpacity
+                            onPress={() => {
+                              myCumir(item);
+                            }}
                           >
-                            <Text
-                              style={styles.buttonForFans}
-                              onPress={() => {}}
+                            <View
+                              style={{ fles: 1, width: 100, paddingLeft: 15 }}
                             >
-                              Подписаться
-                            </Text>
-                          </View>
+                              <Text
+                                style={[
+                                  styles.buttonForFans,
+                                  {
+                                    color: colorButtonP(item)
+                                      ? "rgba(96, 155, 244, 0.75)"
+                                      : "rgba(67, 171, 69, 0.75)",
+                                    borderColor: colorButtonP(item)
+                                      ? "rgba(96, 155, 244, 0.75)"
+                                      : "rgba(67, 171, 69, 0.75)",
+                                  },
+                                ]}
+                              >
+                                {colorButtonP(item)
+                                  ? "Вы подписаны"
+                                  : "Подписаться"}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
                         </View>
                       </View>
                     </View>
@@ -336,13 +327,33 @@ export default function InformationAbout3() {
                               {item.category}
                             </Text>
                           </View>
-                          <View
-                            style={{ fles: 1, width: 100, paddingLeft: 15 }}
+                          <TouchableOpacity
+                            onPress={() => {
+                              return myGroups(item);
+                            }}
                           >
-                            <Text style={styles.buttonForFans}>
-                              Подписаться
-                            </Text>
-                          </View>
+                            <View
+                              style={{ fles: 1, width: 100, paddingLeft: 15 }}
+                            >
+                              <Text
+                                style={[
+                                  styles.buttonForFans,
+                                  {
+                                    color: colorButtonC(item)
+                                      ? "rgba(96, 155, 244, 0.75)"
+                                      : "rgba(67, 171, 69, 0.75)",
+                                    borderColor: colorButtonC(item)
+                                      ? "rgba(96, 155, 244, 0.75)"
+                                      : "rgba(67, 171, 69, 0.75)",
+                                  },
+                                ]}
+                              >
+                                {colorButtonC(item)
+                                  ? "Вы подписаны"
+                                  : "Подписаться"}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
                         </View>
                       </View>
                     </View>
@@ -419,13 +430,12 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   buttonForFans: {
-    color: "rgba(67, 171, 69, 0.75)",
     fontFamily: "RobotoFlex-Regular",
     paddingLeft: 5,
     borderRadius: 80,
-    borderColor: "rgba(67, 171, 69, 0.75)",
     borderWidth: 1,
     fontSize: 11,
     textAlign: "center",
+    marginTop: 5,
   },
 });

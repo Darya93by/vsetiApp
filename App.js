@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, StatusBar } from "react-native";
 import * as React from "react";
 import StartPage from "./components/log_in/StartPage";
 import * as Font from "expo-font";
@@ -53,5 +53,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: StatusBar.currentHeight,
   },
 });
