@@ -18,6 +18,7 @@ import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { gStyle } from "../../styles/gStyle";
 
 export default function InformationAbout() {
   const navigation = useNavigation();
@@ -61,37 +62,15 @@ export default function InformationAbout() {
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
           <View style={{ paddingBottom: 0 }}>
             {/* Шапка начало */}
-            <View
-              style={{
-                marginTop: 30,
-                flexDirection: "row",
-                backgroundColor: "#CCF0D3",
-                height: 55,
-                textAlignVertical: "center",
-                borderRadius: 10,
-              }}
-            >
+            <View style={gStyle.header}>
               <AntDesign
                 name="arrowleft"
                 size={30}
-                style={{ paddingTop: 15, paddingLeft: 16 }}
+                style={{ paddingTop: 12, paddingLeft: 16 }}
                 color="#00B324"
                 onPress={() => navigation.navigate("StartPage")}
               />
-              <Text
-                style={[
-                  styles.text,
-                  {
-                    fontSize: 28,
-                    textAlignVertical: "center",
-                    marginLeft: 80,
-                    color: "#00B324",
-                    paddingBottom: 5,
-                  },
-                ]}
-              >
-                Регистрация
-              </Text>
+              <Text style={gStyle.registration}>Регистрация</Text>
             </View>
             {/* Шапка конец */}
 
@@ -115,15 +94,7 @@ export default function InformationAbout() {
                 </Text>
                 <Text style={[styles.text, { color: "#24C33D" }]}> Этап 1</Text>
               </View>
-              <Text
-                style={{
-                  height: 35,
-                  textAlignVertical: "center",
-                  color: "#B9E9C2",
-                }}
-              >
-                --------
-              </Text>
+              <Text style={styles.line}>--------</Text>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text
                   style={styles.namber}
@@ -136,15 +107,7 @@ export default function InformationAbout() {
                 </Text>
                 <Text style={styles.text}> Этап 2</Text>
               </View>
-              <Text
-                style={{
-                  height: 35,
-                  textAlignVertical: "center",
-                  color: "#B9E9C2",
-                }}
-              >
-                --------
-              </Text>
+              <Text style={styles.line}>--------</Text>
               <View style={{ flex: 1, alignItems: "center" }}>
                 <Text style={styles.namber}> 3 </Text>
                 <Text style={styles.text}> Этап 3</Text>
@@ -155,7 +118,7 @@ export default function InformationAbout() {
             <View
               style={{ marginTop: 5, alignSelf: "center", marginBottom: 20 }}
             >
-              <Text style={[styles.text, { color: "#00B324", fontSize: 20 }]}>
+              <Text style={[styles.text, { color: "#646464", fontSize: 20 }]}>
                 Информация
               </Text>
             </View>
@@ -310,5 +273,10 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     paddingLeft: 14,
     paddingRight: 14,
+  },
+  line: {
+    height: 35,
+    textAlignVertical: "center",
+    color: "#B9E9C2",
   },
 });

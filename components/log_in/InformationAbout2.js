@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import ButtonForReg from "./ButtonForReg";
+import { gStyle } from "../../styles/gStyle";
 
 export default function InformationAbout2() {
   const navigation = useNavigation();
@@ -123,37 +124,15 @@ export default function InformationAbout2() {
     <ScrollView>
       <View style={{ flex: 1 }}>
         {/* Шапка начало  */}
-        <View
-          style={{
-            marginTop: 30,
-            flexDirection: "row",
-            backgroundColor: "#CCF0D3",
-            height: 55,
-            textAlignVertical: "center",
-            borderRadius: 10,
-          }}
-        >
+        <View style={gStyle.header}>
           <AntDesign
             name="arrowleft"
             size={30}
-            style={{ paddingTop: 15, paddingLeft: 16 }}
+            style={{ paddingTop: 12, paddingLeft: 16 }}
             color="#00B324"
             onPress={() => navigation.navigate("StartPage")}
           />
-          <Text
-            style={[
-              styles.text,
-              {
-                fontSize: 28,
-                textAlignVertical: "center",
-                marginLeft: 80,
-                color: "#00B324",
-                paddingBottom: 5,
-              },
-            ]}
-          >
-            Регистрация
-          </Text>
+          <Text style={gStyle.registration}>Регистрация</Text>
         </View>
         {/* Шапка конец */}
 
@@ -167,20 +146,12 @@ export default function InformationAbout2() {
           }}
         >
           <View style={{ flex: 1, alignItems: "center" }}>
-            <Text style={{ backgroundColor: "#B9E9C2", borderRadius: 100 }}>
-              <Octicons name="check-circle" size={38} color="#24C33D" />
+            <Text style={[styles.namber, { backgroundColor: "#24C33D" }]}>
+              <AntDesign name="check" size={30} color="#B9E9C2" />
             </Text>
             <Text style={[styles.text, { color: "#24C33D" }]}> Этап 1</Text>
           </View>
-          <Text
-            style={{
-              height: 35,
-              textAlignVertical: "center",
-              color: "#24C33D",
-            }}
-          >
-            --------
-          </Text>
+          <Text style={[styles.line, { color: "#24C33D" }]}>--------</Text>
           <View style={{ flex: 1, alignItems: "center" }}>
             <Text
               style={[
@@ -197,15 +168,7 @@ export default function InformationAbout2() {
             </Text>
             <Text style={[styles.text, { color: "#24C33D" }]}> Этап 2</Text>
           </View>
-          <Text
-            style={{
-              height: 35,
-              textAlignVertical: "center",
-              color: "#B9E9C2",
-            }}
-          >
-            --------
-          </Text>
+          <Text style={[styles.line, { color: "#B9E9C2" }]}>--------</Text>
           <View style={{ flex: 1, alignItems: "center" }}>
             <Text
               style={styles.namber}
@@ -229,9 +192,8 @@ export default function InformationAbout2() {
               style={[
                 styles.text,
                 {
-                  color: "#00B324",
+                  color: "#646464",
                   fontSize: 20,
-                  fontFamily: "wo-sans-medium",
                 },
               ]}
             >
@@ -244,17 +206,7 @@ export default function InformationAbout2() {
             {/*  Выбранные интересы: начало*/}
             <View style={{ height: 150, width: 360 }}>
               <Text
-                style={[
-                  styles.text,
-                  {
-                    color: "#00B324",
-                    fontSize: 19,
-                    paddingBottom: 5,
-                    paddingTop: 10,
-                    paddingLeft: 10,
-                    fontFamily: "wo-sans-medium",
-                  },
-                ]}
+                style={[styles.text, styles.category, { paddingBottom: 5 }]}
               >
                 Меня интересует:
               </Text>
@@ -262,15 +214,11 @@ export default function InformationAbout2() {
                 data={interests}
                 horizontal={false}
                 numColumns={2}
-                style={{
-                  borderWidth: 1,
-                  borderColor: "#B9E9C2",
-                  borderRadius: 10,
-                  paddingLeft: 10,
-                  marginBottom: 5,
-                }}
+                style={styles.flatList}
                 ListEmptyComponent={
-                  <Text style={[styles.text, { fontSize: 18 }]}>
+                  <Text
+                    style={[styles.text, { fontSize: 18, color: "#CACACA" }]}
+                  >
                     Поделитесь с сообществом своими предпочтениями.
                   </Text>
                 }
@@ -285,7 +233,7 @@ export default function InformationAbout2() {
                         <Text
                           style={[
                             styles.text,
-                            { color: "#00B324", height: 28 },
+                            { color: "#8A8A8A", height: 28 },
                           ]}
                           key={item.key}
                         >
@@ -294,7 +242,7 @@ export default function InformationAbout2() {
                           <AntDesign
                             name="closecircleo"
                             size={15}
-                            color="#00B324"
+                            color="#8A8A8A"
                             onPress={() => {
                               deleteDefInterests(item, item.key);
                             }}
@@ -311,32 +259,17 @@ export default function InformationAbout2() {
 
             {/*  Список доступных категорий:начало*/}
             <View style={{ height: 290, width: 360 }}>
-              <Text
-                style={[
-                  styles.text,
-                  {
-                    color: "#00B324",
-                    fontSize: 19,
-                    fontFamily: "wo-sans-medium",
-                    paddingTop: 10,
-                    paddingLeft: 10,
-                  },
-                ]}
-              >
+              <Text style={[styles.text, styles.category]}>
                 Доступные категории
               </Text>
-              <Text style={[styles.text, { paddingBottom: 10 }]}>
+              <Text
+                style={[styles.text, { paddingBottom: 10, color: "#CACACA" }]}
+              >
                 (нажмите, что-бы выбрать)
               </Text>
               <FlatList
                 data={defInterests}
-                style={{
-                  borderWidth: 1,
-                  borderColor: "#B9E9C2",
-                  borderRadius: 10,
-                  paddingLeft: 10,
-                  marginBottom: 5,
-                }}
+                style={styles.flatList}
                 ListEmptyComponent={
                   <Text style={[styles.text, { fontSize: 18 }]}>
                     Вы выбрали все категории
@@ -355,7 +288,7 @@ export default function InformationAbout2() {
                         <Text
                           style={[
                             styles.text,
-                            { color: "#00B324", height: 28, fontSize: 17 },
+                            { color: "#8A8A8A", height: 28, fontSize: 17 },
                           ]}
                           key={item.key}
                           onPress={() => {
@@ -425,5 +358,23 @@ const styles = StyleSheet.create({
     color: "#B9E9C2",
     fontFamily: "RobotoFlex-Regular",
     fontSize: 15,
+  },
+  flatList: {
+    borderWidth: 1,
+    borderColor: "#B9E9C2",
+    borderRadius: 10,
+    paddingLeft: 10,
+    marginBottom: 5,
+    backgroundColor: "#E5EBE6",
+  },
+  category: {
+    color: "#00B324",
+    fontSize: 19,
+    paddingTop: 10,
+    paddingLeft: 10,
+  },
+  line: {
+    height: 35,
+    textAlignVertical: "center",
   },
 });
