@@ -9,6 +9,7 @@ import {
   Keyboard,
   ScrollView,
   ImageBackground,
+  StatusBar,
 } from "react-native";
 import React from "react";
 import { Formik } from "formik";
@@ -57,10 +58,11 @@ export default function InformationAbout() {
       onPress={() => {
         Keyboard.dismiss();
       }}
+      style={{ paddingTop: StatusBar.currentHeight, flex: 1 }}
     >
       <ScrollView>
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-          <View style={{ paddingBottom: 0 }}>
+          <View>
             {/* Шапка начало */}
             <View style={gStyle.header}>
               <AntDesign
