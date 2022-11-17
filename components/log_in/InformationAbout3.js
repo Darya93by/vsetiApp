@@ -107,13 +107,16 @@ export default function InformationAbout3() {
     ],
   ]);
 
+  const [dataPeople, setDataPeople] = useState(data[0]);
+  const [dataCommunitie, setDataCommunitie] = useState(data[1]);
+
   //
 
   const navigation = useNavigation();
 
   const [peoples, setPeoples] = useState([]);
   const addPeople = (item) => {
-    return setPeoples((list) => [item, ...list]);
+    return setPeoples((list) => [{ ...item, check: true }, ...list]);
   };
 
   const [communities, setCommunities] = useState([]);
@@ -128,7 +131,6 @@ export default function InformationAbout3() {
           return list.filter((peoples) => peoples.id != item.id);
         })
       : addPeople(item);
-    console.log(peoples);
   };
   const myGroups = (item) => {
     let listID = communities.map((communitie) => communitie.id);
@@ -138,15 +140,8 @@ export default function InformationAbout3() {
         })
       : addCommunities(item);
   };
-
-  const colorButtonP = (item) => {
-    let listID = peoples.map((people) => people.id);
-    listID.includes(item.id) ? true : false;
-  };
-  const colorButtonC = (item) => {
-    let listID = communities.map((value) => value.id);
-    listID.includes(item.id) ? true : false;
-  };
+  let listID = peoples.map((people) => people.id);
+  let listCom = communities.map((value) => value.id);
 
   return (
     <View>
@@ -223,7 +218,7 @@ export default function InformationAbout3() {
               Люди
             </Text>
             <FlatList
-              data={data[0]}
+              data={dataPeople}
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity>
@@ -266,16 +261,16 @@ export default function InformationAbout3() {
                                 style={[
                                   styles.buttonForFans,
                                   {
-                                    color: colorButtonP(item)
+                                    color: listID.includes(item.id)
                                       ? "rgba(96, 155, 244, 0.75)"
                                       : "rgba(67, 171, 69, 0.75)",
-                                    borderColor: colorButtonP(item)
+                                    borderColor: listID.includes(item.id)
                                       ? "rgba(96, 155, 244, 0.75)"
                                       : "rgba(67, 171, 69, 0.75)",
                                   },
                                 ]}
                               >
-                                {colorButtonP(item)
+                                {listID.includes(item.id)
                                   ? "Вы подписаны"
                                   : "Подписаться"}
                               </Text>
@@ -296,7 +291,7 @@ export default function InformationAbout3() {
               Сообщества
             </Text>
             <FlatList
-              data={data[1]}
+              data={dataCommunitie}
               renderItem={({ item }) => {
                 return (
                   <TouchableOpacity>
@@ -329,6 +324,7 @@ export default function InformationAbout3() {
                           </View>
                           <TouchableOpacity
                             onPress={() => {
+                              !item.check;
                               return myGroups(item);
                             }}
                           >
@@ -339,16 +335,16 @@ export default function InformationAbout3() {
                                 style={[
                                   styles.buttonForFans,
                                   {
-                                    color: colorButtonC(item)
+                                    color: listCom.includes(item.id)
                                       ? "rgba(96, 155, 244, 0.75)"
                                       : "rgba(67, 171, 69, 0.75)",
-                                    borderColor: colorButtonC(item)
+                                    borderColor: listCom.includes(item.id)
                                       ? "rgba(96, 155, 244, 0.75)"
                                       : "rgba(67, 171, 69, 0.75)",
                                   },
                                 ]}
                               >
-                                {colorButtonC(item)
+                                {listCom.includes(item.id)
                                   ? "Вы подписаны"
                                   : "Подписаться"}
                               </Text>
