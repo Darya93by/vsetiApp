@@ -20,6 +20,9 @@ export default function Navigate() {
             navigationOptions: {
               headerVisible: false,
             },
+            cardStyle: {
+              backgroundColor: "#FFFFFF",
+            },
           }}
         />
         <Stack.Screen
@@ -29,6 +32,9 @@ export default function Navigate() {
             headerMode: "none",
             navigationOptions: {
               headerVisible: false,
+            },
+            cardStyle: {
+              backgroundColor: "#FFFFFF",
             },
           }}
         />
@@ -40,6 +46,9 @@ export default function Navigate() {
             navigationOptions: {
               headerVisible: false,
             },
+            cardStyle: {
+              backgroundColor: "#FFFFFF",
+            },
           }}
         />
         <Stack.Screen
@@ -49,6 +58,9 @@ export default function Navigate() {
             headerMode: "none",
             navigationOptions: {
               headerVisible: false,
+            },
+            cardStyle: {
+              backgroundColor: "#FFFFFF",
             },
           }}
         />
