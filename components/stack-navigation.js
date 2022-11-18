@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import InformationAbout2 from "./log_in/InformationAbout2";
 import InformationAbout3 from "./log_in/InformationAbout3";
+import MyPage from "./main_page/MyPage";
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,19 @@ export default function Navigate() {
         <Stack.Screen
           name="InformationAbout3"
           component={InformationAbout3}
+          options={{
+            headerMode: "none",
+            navigationOptions: {
+              headerVisible: false,
+            },
+            cardStyle: {
+              backgroundColor: "#FFFFFF",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="MyPage"
+          component={MyPage}
           options={{
             headerMode: "none",
             navigationOptions: {

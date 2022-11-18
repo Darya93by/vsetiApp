@@ -4,22 +4,19 @@ import {
   View,
   Image,
   Alert,
-  TextInput,
-  TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
   FlatList,
   TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { useState, useEffect } from "react";
-import { KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { gStyle } from "../../styles/gStyle";
 import ButtonForReg from "./ButtonForReg";
 
-export default function InformationAbout3() {
+export default function InformationAbout3({ route }) {
+  const { aboutMe } = route?.params || {};
   // Сервер:
   //
   // const [data, setData] = useState([]);
@@ -374,7 +371,7 @@ export default function InformationAbout3() {
         </Text>
         <ButtonForReg
           text={"Продолжить"}
-          onPress={() => console.log("finish")}
+          onPress={() => navigation.navigate("MyPage", { aboutMe: aboutMe })}
         />
       </View>
     </View>

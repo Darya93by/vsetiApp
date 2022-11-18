@@ -10,8 +10,9 @@ import {
   ScrollView,
   ImageBackground,
   StatusBar,
+  Button,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik } from "formik";
 import ButtonForReg from "./ButtonForReg";
 import { useState } from "react";
@@ -20,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { gStyle } from "../../styles/gStyle";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function InformationAbout() {
   const navigation = useNavigation();
@@ -51,7 +53,41 @@ export default function InformationAbout() {
     userImage = { uri: selectedImage.localUri };
   } else userImage = require("../../assets/man.png");
 
+  const [aboutMe, setAboutMe] = useState({});
+  const addMyInfo = (myName, myLastName, myAvatar, myBirthday, myCity) => {
+    setAboutMe({
+      key: Math.random().toString(36),
+      name: myName,
+      lastname: myLastName,
+      avatar: myAvatar,
+      birthday: myBirthday,
+      city: myCity,
+    });
+  };
+
   // конец функций для фото с галереи
+
+  // Для выбора даты
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const [defDate, setDefDate] = useState("Дата рождения");
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    let dateBirth =
+      date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+    setDefDate(dateBirth);
+
+    hideDatePicker();
+  };
 
   return (
     <TouchableWithoutFeedback
@@ -145,6 +181,17 @@ export default function InformationAbout() {
                     " " +
                     values.city
                 );
+                addMyInfo(
+                  values.name,
+                  values.lastname,
+                  userImage,
+                  defDate,
+                  values.city
+                );
+                console.log(aboutMe);
+                navigation.navigate("InformationAbout2", {
+                  aboutMe: aboutMe,
+                });
               }}
             >
               {(props) => (
@@ -210,12 +257,30 @@ export default function InformationAbout() {
                       value={props.values.lastname}
                       onChangeText={props.handleChange("lastname")}
                     />
-                    <TextInput
-                      placeholder="Дата рождения"
-                      maxLength={30}
-                      style={styles.input}
-                      value={props.values.birthday}
-                      onChangeText={props.handleChange("birthday")}
+                    <View style={{ textAlign: "center" }}>
+                      <Text
+                        style={[
+                          styles.input,
+                          {
+                            textAlignVertical: "center",
+                            color:
+                              defDate == "Дата рождения"
+                                ? "#A8A8A8"
+                                : "#3C3C3C",
+                          },
+                        ]}
+                        onPress={showDatePicker}
+                      >
+                        {defDate}
+                      </Text>
+                    </View>
+                    <DateTimePickerModal
+                      isVisible={isDatePickerVisible}
+                      mode="date"
+                      maximumDate={new Date(2015, 0, 1)}
+                      minimumDate={new Date(1940, 0, 1)}
+                      onConfirm={handleConfirm}
+                      onCancel={hideDatePicker}
                     />
                     <TextInput
                       placeholder="Город"
@@ -230,7 +295,6 @@ export default function InformationAbout() {
                       text="Продолжить"
                       onPress={() => {
                         props.handleSubmit();
-                        navigation.navigate("InformationAbout2");
                       }}
                     />
                   </View>
