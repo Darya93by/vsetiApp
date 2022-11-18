@@ -18,8 +18,10 @@ import { Octicons } from "@expo/vector-icons";
 import ButtonForReg from "./ButtonForReg";
 import { gStyle } from "../../styles/gStyle";
 
-export default function InformationAbout2() {
+export default function InformationAbout2({ route }) {
   const navigation = useNavigation();
+  const { aboutMe } = route?.params || {};
+  const aboutUser = aboutMe;
 
   const [interests, setInterests] = useState([]);
 
@@ -250,7 +252,9 @@ export default function InformationAbout2() {
         </Text>
         <ButtonForReg
           text={"Продолжить"}
-          onPress={() => navigation.navigate("InformationAbout3")}
+          onPress={() =>
+            navigation.navigate("InformationAbout3", { aboutMe: aboutMe })
+          }
         />
       </View>
     </View>
