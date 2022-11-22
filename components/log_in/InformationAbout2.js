@@ -160,13 +160,7 @@ export default function InformationAbout2({ route }) {
         </View>
         <Text style={[styles.line, { color: "#B9E9C2" }]}>--------</Text>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text
-            style={styles.namber}
-            onPress={() => navigation.navigate("InformationAbout3")}
-          >
-            {" "}
-            3{" "}
-          </Text>
+          <Text style={styles.namber}> 3 </Text>
           <Text style={styles.text}> Этап 3</Text>
         </View>
       </View>
