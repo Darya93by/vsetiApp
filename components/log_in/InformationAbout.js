@@ -53,16 +53,16 @@ export default function InformationAbout() {
     userImage = { uri: selectedImage.localUri };
   } else userImage = require("../../assets/man.png");
 
-  const [aboutMe, setAboutMe] = useState({});
+  let aboutMe;
   const addMyInfo = (myName, myLastName, myAvatar, myBirthday, myCity) => {
-    setAboutMe({
+    aboutMe = {
       key: Math.random().toString(36),
       name: myName,
       lastname: myLastName,
       avatar: myAvatar,
       birthday: myBirthday,
       city: myCity,
-    });
+    };
   };
 
   // конец функций для фото с галереи
@@ -82,8 +82,14 @@ export default function InformationAbout() {
 
   const handleConfirm = (date) => {
     console.warn("A date has been picked: ", date);
+    birthday = Date.parse(date);
     let dateBirth =
-      date.getDate() + "." + date.getMonth() + "." + date.getFullYear();
+      ("0" + date.getDate()).slice(-2) +
+      "." +
+      ("0" + (1 + date.getMonth())).slice(-2) +
+      "." +
+      date.getFullYear();
+
     setDefDate(dateBirth);
 
     hideDatePicker();
@@ -134,15 +140,7 @@ export default function InformationAbout() {
               </View>
               <Text style={styles.line}>--------</Text>
               <View style={{ flex: 1, alignItems: "center" }}>
-                <Text
-                  style={styles.namber}
-                  onPress={() => {
-                    navigation.navigate("InformationAbout2");
-                  }}
-                >
-                  {" "}
-                  2{" "}
-                </Text>
+                <Text style={styles.namber}> 2 </Text>
                 <Text style={styles.text}> Этап 2</Text>
               </View>
               <Text style={styles.line}>--------</Text>
@@ -166,21 +164,9 @@ export default function InformationAbout() {
               initialValues={{
                 name: "",
                 lastname: "",
-                birthday: "",
                 city: "",
               }}
               onSubmit={(values, action) => {
-                Alert.alert(
-                  values.name +
-                    " " +
-                    values.lastname +
-                    " " +
-                    "рождён(на)" +
-                    values.birthday +
-                    "," +
-                    " " +
-                    values.city
-                );
                 addMyInfo(
                   values.name,
                   values.lastname,
