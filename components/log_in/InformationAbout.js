@@ -2,8 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  Alert,
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
@@ -22,6 +20,8 @@ import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { gStyle } from "../../styles/gStyle";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useDispatch } from "react-redux";
+import { addAccaunt } from "../../redux/store/accauntSlice";
 
 export default function InformationAbout() {
   const navigation = useNavigation();
@@ -94,6 +94,7 @@ export default function InformationAbout() {
 
     hideDatePicker();
   };
+  const dispatch = useDispatch();
 
   return (
     <TouchableWithoutFeedback
@@ -175,6 +176,18 @@ export default function InformationAbout() {
                   values.city
                 );
                 console.log(aboutMe);
+
+                dispatch(
+                  addAccaunt({
+                    name: values.name,
+                    key: aboutMe.key,
+                    lastname: values.lastname,
+                    city: values.city,
+                    birthday: defDate,
+                    avatar: userImage,
+                  })
+                );
+
                 navigation.navigate("InformationAbout2", {
                   aboutMe: aboutMe,
                 });

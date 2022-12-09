@@ -14,10 +14,13 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import { Communities } from "../const/Communities";
 
 export default function MyPage({ route }) {
-  const { aboutMe } = route?.params || {};
   const navigation = useNavigation();
+
+  const owner = useSelector((state) => state.accaunt);
 
   const [dropAbout, setDropAbout] = useState(false);
   const [stat, setStat] = useState(false);
@@ -48,7 +51,11 @@ export default function MyPage({ route }) {
             color="white"
             style={{ paddingTop: 5, paddingLeft: 16 }}
             onPress={() => {
-              navigation.navigate("MyPage", { aboutMe: aboutMe });
+              {
+                console.log(owner);
+
+                navigation.navigate("MyPage");
+              }
             }}
           />
 
@@ -74,7 +81,7 @@ export default function MyPage({ route }) {
               height: 310,
             }}
           >
-            <ImageBackground source={aboutMe.avatar} style={styles.ava}>
+            <ImageBackground source={owner.avatar} style={styles.ava}>
               <View
                 style={[
                   styles.header,
@@ -94,7 +101,7 @@ export default function MyPage({ route }) {
                     },
                   ]}
                 >
-                  {aboutMe.name} {aboutMe.lastname}
+                  {owner.name} {owner.lastname}
                 </Text>
                 <Text
                   style={[
@@ -131,16 +138,16 @@ export default function MyPage({ route }) {
         {dropAbout ? (
           <View style={styles.aboutCount}>
             <ImageBackground
-              source={aboutMe.avatar}
+              source={owner.avatar}
               style={styles.backImg}
               imageStyle={{ borderRadius: 10 }}
             >
               <View style={styles.infoCont}>
                 <Text style={[styles.text]}>
                   {" "}
-                  День рождения: {aboutMe.birthday}
+                  День рождения: {owner.birthday}
                 </Text>
-                <Text style={[styles.text]}> Город: {aboutMe.city}</Text>
+                <Text style={[styles.text]}> Город: {owner.city}</Text>
                 <Text style={[styles.text]}> Семья: </Text>
                 <Text style={[styles.text]}> Дети: </Text>
                 <Text style={[styles.text]}> Образование: </Text>
@@ -154,7 +161,62 @@ export default function MyPage({ route }) {
         )}
       </View>
 
-      <View></View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 3,
+          // backgroundColor: "#D4EEED",
+        }}
+      >
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <TouchableOpacity
+            onPress={() => {
+              console.log(owner.groups);
+            }}
+          >
+            <View style={styles.pageMenu}>
+              <Text>Сообщества</Text>
+              <Text>({owner.groups.length})</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("MyFriends");
+            }}
+          >
+            <View style={styles.pageMenu}>
+              <Text>Подписки</Text>
+              <Text>({owner.friends.length})</Text>
+            </View>
+          </TouchableOpacity>
+          <View style={styles.pageMenu}>
+            <Text>Мой блог</Text>
+          </View>
+        </View>
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <View style={styles.pageMenu}>
+            <Text>Фото</Text>
+          </View>
+          <View style={styles.pageMenu}>
+            <Text>Аудио</Text>
+          </View>
+          <View style={styles.pageMenu}>
+            <Text>Видео</Text>
+          </View>
+        </View>
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <View style={styles.pageMenu}>
+            <Text>Блог</Text>
+          </View>
+          <View style={styles.pageMenu}>
+            <Text>Новости</Text>
+          </View>
+          <View style={styles.pageMenu}>
+            <Text>Подписчики</Text>
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
@@ -213,7 +275,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   avaAndAboutCont: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -221,5 +282,15 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(163, 163, 163, 0.9)",
     height: 310,
     width: 360,
+  },
+  pageMenu: {
+    height: 60,
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    marginBottom: 3,
+    marginTop: 3,
+    borderRadius: 10,
   },
 });

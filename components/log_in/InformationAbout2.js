@@ -17,90 +17,18 @@ import { AntDesign } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import ButtonForReg from "./ButtonForReg";
 import { gStyle } from "../../styles/gStyle";
-
+import { useDispatch } from "react-redux";
+import { addInterests } from "../../redux/store/accauntSlice";
+import { Interest } from "../const/Interests";
 export default function InformationAbout2({ route }) {
   const navigation = useNavigation();
-  const { aboutMe } = route?.params || {};
-  const aboutUser = aboutMe;
 
   const [interests, setInterests] = useState([]);
-
-  const [defInterests, setDefInterests] = useState([
-    { interest: "Музыка", key: 1 },
-    {
-      interest: "Фотография",
-      key: 2,
-    },
-    {
-      interest: "Спорт",
-      key: 3,
-    },
-    {
-      interest: "Творчество",
-      key: 4,
-    },
-    {
-      interest: "Компьютерные игры",
-      key: 5,
-    },
-    {
-      interest: "Чтение",
-      key: 6,
-    },
-    {
-      interest: "Общение",
-      key: 7,
-    },
-    {
-      interest: "Саморазвитие",
-      key: 8,
-    },
-    {
-      interest: "Литература",
-      key: 9,
-    },
-    {
-      interest: "Шоппинг",
-      key: 10,
-    },
-    {
-      interest: "Трейдинг",
-      key: 11,
-    },
-    {
-      interest: "Путешествия",
-      key: 12,
-    },
-    {
-      interest: "Автомобили",
-      key: 13,
-    },
-    {
-      interest: "Мотоциклы",
-      key: 14,
-    },
-    {
-      interest: "Наука",
-      key: 15,
-    },
-    {
-      interest: "Религия",
-      key: 16,
-    },
-    {
-      interest: "Кино",
-      key: 17,
-    },
-    { interest: "Искусство", key: 18 },
-    {
-      interest: "Животные",
-      key: 19,
-    },
-  ]);
 
   const addInterest = (newInterest) => {
     return setInterests((list) => [newInterest, ...list]);
   };
+  const dispatch = useDispatch();
 
   const onClik = (item) => {
     let listID = interests.map((value) => value.key);
@@ -109,6 +37,11 @@ export default function InformationAbout2({ route }) {
           return List.filter((interest) => interest.key != item.key);
         })
       : addInterest(item);
+    dispatch(
+      addInterests({
+        interests: interests,
+      })
+    );
   };
   let listID = interests.map((i) => i.key);
 
@@ -178,7 +111,7 @@ export default function InformationAbout2({ route }) {
       >
         <View style={{ flex: 1, flexDirection: "row" }}>
           <FlatList
-            data={defInterests}
+            data={Interest}
             numColumns={3}
             horizontal={false}
             columnWrapperStyle={{ justifyContent: "space-evenly" }}
@@ -246,9 +179,10 @@ export default function InformationAbout2({ route }) {
         </Text>
         <ButtonForReg
           text={"Продолжить"}
-          onPress={() =>
-            navigation.navigate("InformationAbout3", { aboutMe: aboutMe })
-          }
+          onPress={() => {
+            console.log(Interest);
+            navigation.navigate("InformationAbout3");
+          }}
         />
       </View>
     </View>

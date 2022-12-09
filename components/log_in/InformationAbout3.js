@@ -3,8 +3,6 @@ import {
   Text,
   View,
   Image,
-  Alert,
-  Keyboard,
   FlatList,
   TouchableOpacity,
 } from "react-native";
@@ -14,9 +12,16 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { gStyle } from "../../styles/gStyle";
 import ButtonForReg from "./ButtonForReg";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { addFriends } from "../../redux/store/accauntSlice";
+import { addGroup } from "../../redux/store/accauntSlice";
+import { Peoples } from "../const/Peoples";
+import { Communities } from "../const/Communities";
 
 export default function InformationAbout3({ route }) {
-  const { aboutMe } = route?.params || {};
+  const owner = useSelector((state) => state.accaunt);
+  const dispatch = useDispatch();
   // Сервер:
   //
   // const [data, setData] = useState([]);
@@ -32,80 +37,8 @@ export default function InformationAbout3({ route }) {
   //
   // Допустим, data будет записана следующим образом:
 
-  const [data, setData] = useState([
-    [
-      {
-        name: "Alex",
-        lastname: "Jonson",
-        id: 1,
-        avatar: require("../../assets/yongMan.jpg"),
-        fans: 100467,
-      },
-      {
-        name: "July",
-        lastname: "Albrus",
-        id: 2,
-        avatar: require("../../assets/gerl1.jpeg"),
-        fans: 86790,
-      },
-      {
-        name: "Kate",
-        lastname: "Pirson",
-        id: 3,
-        avatar: require("../../assets/gerl2.jpg"),
-        fans: 55388,
-      },
-      {
-        name: "Elizabet",
-        lastname: "Ford",
-        id: 4,
-        avatar: require("../../assets/gerl3.jpeg"),
-        fans: 38903,
-      },
-      {
-        name: "Penny",
-        lastname: "Scott",
-        id: 5,
-        avatar: require("../../assets/gerl4.jpeg"),
-        fans: 31400,
-      },
-    ],
-    [
-      {
-        communitie: "Vseti for android",
-        category: "Technologies",
-        id: 1,
-        icon: require("../../assets/icon_11.png"),
-      },
-      {
-        communitie: "Rock",
-        category: "Music",
-        id: 2,
-        icon: require("../../assets/rock.jpeg"),
-      },
-      {
-        communitie: "Photography",
-        category: "Photo",
-        id: 3,
-        icon: require("../../assets/photo.jpg"),
-      },
-      {
-        communitie: "Dogs",
-        category: "Animal",
-        id: 4,
-        icon: require("../../assets/dog.jpg"),
-      },
-      {
-        communitie: "Horror",
-        category: "Films",
-        id: 5,
-        icon: require("../../assets/horror.jpeg"),
-      },
-    ],
-  ]);
-
-  const [dataPeople, setDataPeople] = useState(data[0]);
-  const [dataCommunitie, setDataCommunitie] = useState(data[1]);
+  const [dataPeople, setDataPeople] = useState(Peoples.slice(0, 5));
+  const [dataCommunitie, setDataCommunitie] = useState(Communities.slice(0, 5));
 
   //
 
@@ -371,7 +304,22 @@ export default function InformationAbout3({ route }) {
         </Text>
         <ButtonForReg
           text={"Продолжить"}
-          onPress={() => navigation.navigate("MyPage", { aboutMe: aboutMe })}
+          onPress={() => {
+            dispatch(
+              addFriends({
+                friends: peoples,
+              })
+            );
+            dispatch(
+              addGroup({
+                groups: communities,
+              })
+            );
+            navigation.navigate("MyDrower", {
+              screen: "MyPage",
+            });
+            console.log(owner);
+          }}
         />
       </View>
     </View>

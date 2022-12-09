@@ -1,15 +1,15 @@
 import { StyleSheet, View, StatusBar } from "react-native";
 import * as React from "react";
-import StartPage from "./components/log_in/StartPage";
 import * as Font from "expo-font";
 import { useState, useEffect, useCallback } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import MainStack from "./components/stack-navigation";
 import "react-native-gesture-handler";
+import { Provider } from "react-redux";
+import Store from "./redux/store";
+import { NativeRouter } from "react-router-native";
 
 export default function App() {
-  const [font, setFont] = useState(false);
-
   useEffect(() => {
     async function prepare() {
       try {
@@ -32,7 +32,7 @@ export default function App() {
 
     prepare();
   }, []);
-
+  const [font, setFont] = useState(false);
   const appPage = useCallback(async () => {
     if (font) {
       await SplashScreen.hideAsync();
@@ -44,9 +44,11 @@ export default function App() {
   }
 
   return (
-    <View onLayout={appPage} style={styles.container}>
-      <MainStack />
-    </View>
+    <Provider store={Store}>
+      <View onLayout={appPage} style={styles.container}>
+        <MainStack />
+      </View>
+    </Provider>
   );
 }
 
