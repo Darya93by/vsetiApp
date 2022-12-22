@@ -46,7 +46,7 @@ export default function InformationAbout3({ route }) {
 
   const [peoples, setPeoples] = useState([]);
   const addPeople = (item) => {
-    return setPeoples((list) => [{ ...item, check: true }, ...list]);
+    return setPeoples((list) => [{ ...item }, ...list]);
   };
 
   const [communities, setCommunities] = useState([]);
