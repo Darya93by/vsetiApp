@@ -5,6 +5,7 @@ export const Peoples = [
     id: 1,
     avatar: require("../../assets/peoples/yongMan.jpg"),
     fans: 100467,
+    state: false,
   },
   {
     name: "July",
